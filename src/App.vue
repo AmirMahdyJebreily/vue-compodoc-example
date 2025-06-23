@@ -1,6 +1,28 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import {
+  isNavigationFailure,
+  type NavigationRedirectError,
+  RouterLink,
+  RouterView,
+  type NavigationFailure,
+} from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+
+async function onClick(navigate: () => Promise<unknown>) {
+  // `navigate()` همیشه resolve می‌شود و ممکن است یک NavigationFailure برگرداند
+  const result = (await navigate()) as NavigationFailure | void
+
+  if (isNavigationFailure(result)) {
+    // حالا `result` قطعاً از نوع NavigationFailure است
+
+    console.log(result.type)
+    if (result.type) {
+      console.warn('⛔️ ناوبری توسط گارد رد شد:', result)
+    }
+  } else {
+    console.log('✔️ ناوبری موفق بود')
+  }
+}
 </script>
 
 <template>
@@ -12,6 +34,9 @@ import HelloWorld from './components/HelloWorld.vue'
 
       <nav>
         <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/premium/kir12345" v-slot="{ href, navigate }">
+          <a :href="href" @click.prevent="onClick(navigate)"> صفحه پریمیوم </a>
+        </RouterLink>
         <RouterLink to="/about">About</RouterLink>
       </nav>
     </div>
