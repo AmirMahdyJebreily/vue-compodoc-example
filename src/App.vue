@@ -1,11 +1,5 @@
 <script setup lang="ts">
-import {
-  isNavigationFailure,
-  type NavigationRedirectError,
-  RouterLink,
-  RouterView,
-  type NavigationFailure,
-} from 'vue-router'
+import { isNavigationFailure, RouterLink, RouterView, type NavigationFailure } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 
 async function onClick(navigate: () => Promise<unknown>) {
@@ -34,7 +28,7 @@ async function onClick(navigate: () => Promise<unknown>) {
 
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/premium/kir12345" v-slot="{ href, navigate }">
+        <RouterLink to="/premium/rick12345" v-slot="{ href, navigate }">
           <a :href="href" @click.prevent="onClick(navigate)"> صفحه پریمیوم </a>
         </RouterLink>
         <RouterLink to="/about">About</RouterLink>
